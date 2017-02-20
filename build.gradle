@@ -1,0 +1,51 @@
+buildscript {
+  repositories { jcenter() }
+  dependencies {
+    classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'nebula.javadoc-jar'
+apply plugin: 'nebula.source-jar'
+apply plugin: 'maven' // make pom files for deployment
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group = "com.netflix.bdp.s3"
+version = '0.5.5'
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+}
+
+configurations {
+  shadow
+  compile.extendsFrom provided
+  provided.extendsFrom shadow
+}
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
+dependencies {
+  provided 'com.amazonaws:aws-java-sdk-s3:1.11.15'
+  provided 'org.slf4j:slf4j-api:1.7.5'
+  provided 'org.apache.hadoop:hadoop-client:2.7.2'
+  provided 'org.apache.hadoop:hadoop-aws:2.7.2'
+  provided 'com.google.guava:guava:11.0.2'
+
+  testCompile 'org.apache.hadoop:hadoop-hdfs:2.7.2:tests'
+  testCompile 'org.apache.hadoop:hadoop-common:2.7.2:tests'
+  testCompile 'org.apache.hadoop:hadoop-minicluster:2.7.2'
+  testCompile 'junit:junit:4.12'
+  testCompile 'org.slf4j:slf4j-simple:1.7.5'
+  testCompile 'org.mockito:mockito-all:1.10.19'
+}
+
+shadowJar {
+  classifier 'shaded'
+
+  configurations = [project.configurations.shadow]
+  from(project.sourceSets.main.output)
+}
