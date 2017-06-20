@@ -2,6 +2,7 @@ buildscript {
   repositories { jcenter() }
   dependencies {
     classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+    classpath 'com.netflix.nebula:nebula-publishing-plugin:5.1.0'
   }
 }
 
