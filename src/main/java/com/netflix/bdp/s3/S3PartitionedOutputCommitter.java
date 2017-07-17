@@ -42,11 +42,6 @@ public class S3PartitionedOutputCommitter extends S3MultipartOutputCommitter {
   private static final Logger LOG = LoggerFactory.getLogger(
       S3PartitionedOutputCommitter.class);
 
-  public S3PartitionedOutputCommitter(Path outputPath, JobContext context)
-      throws IOException {
-    super(outputPath, context);
-  }
-
   public S3PartitionedOutputCommitter(Path outputPath,
                                       TaskAttemptContext context)
       throws IOException {
