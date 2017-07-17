@@ -29,10 +29,6 @@ public class S3DirectoryOutputCommitter extends S3MultipartOutputCommitter {
   private static final Logger LOG = LoggerFactory.getLogger(
       S3DirectoryOutputCommitter.class);
 
-  public S3DirectoryOutputCommitter(Path outputPath, JobContext context) throws IOException {
-    super(outputPath, context);
-  }
-
   public S3DirectoryOutputCommitter(Path outputPath, TaskAttemptContext context) throws IOException {
     super(outputPath, context);
   }
