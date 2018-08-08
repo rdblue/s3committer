@@ -41,10 +41,12 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.URI;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.Collections;
 
 class S3MultipartOutputCommitter extends FileOutputCommitter {
 
@@ -249,7 +251,8 @@ class S3MultipartOutputCommitter extends FileOutputCommitter {
     FileStatus[] pendingCommitFiles = attemptFS.listStatus(
         jobAttemptPath, HiddenPathFilter.get());
 
-    final List<S3Util.PendingUpload> pending = Lists.newArrayList();
+    final List<S3Util.PendingUpload> pending =
+        Collections.synchronizedList(new ArrayList<S3Util.PendingUpload>());
 
     // try to read every pending file and add all results to pending.
     // in the case of a failure to read the file, exceptions are held until all
@@ -413,8 +416,8 @@ class S3MultipartOutputCommitter extends FileOutputCommitter {
 
     // keep track of unfinished commits in case one fails. if something fails,
     // we will try to abort the ones that had already succeeded.
-    final List<S3Util.PendingUpload> commits = Lists.newArrayList();
-
+    final List<S3Util.PendingUpload> commits =
+        Collections.synchronizedList(new ArrayList<S3Util.PendingUpload>());
 
     boolean threw = true;
     ObjectOutputStream completeUploadRequests = new ObjectOutputStream(
