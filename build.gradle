@@ -22,8 +22,6 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'nebula.javadoc-jar'
-apply plugin: 'nebula.source-jar'
 apply plugin: 'maven' // make pom files for deployment
 apply plugin: 'com.github.johnrengelman.shadow'
 
